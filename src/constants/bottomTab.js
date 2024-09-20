@@ -5,7 +5,7 @@ export const bottomTabs = [
         title: 'Trang chủ'
     },
     {
-        name: 'History',
+        name: 'Order',
         image: require('../../assets/history.png'),
         title: 'Hoạt động'
     },

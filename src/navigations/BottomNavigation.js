@@ -22,12 +22,12 @@ const BottomNavigation = () => {
                     style={{
                         width: 26,
                         height: 26,
-                        tintColor: focused ? '#009bf8' : 'gray'
+                        tintColor: focused ? '#F46138' : 'gray'
                     }}
                 />
                 <Text
                     style={{
-                        color: focused ? '#009bf8' : 'gray',
+                        color: focused ? '#F46138' : 'gray',
                         fontSize: 10
                     }}
                 >{tab.title}</Text>
@@ -47,11 +47,10 @@ const BottomNavigation = () => {
                     right: 0,
                     backgroundColor: 'white',
                     height: 85,
-                    // borderRadius: 0,
                     justifyContent: 'center',
                     alignItems: 'center',
                 },
-                tabBarActiveTintColor: '#009bf8',
+                tabBarActiveTintColor: '#F46138',
             }}
         >
             {

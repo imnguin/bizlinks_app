@@ -2,15 +2,16 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import Account from '../account'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import Order from '../order'
 
 const Main = (props) => {
   const renderItem = (name) => {
     switch (name) {
       case 'Account':
         return <Account navigation={props.navigation} />
+      case 'Order':
+        return <Order navigation={props.navigation} />
       default:
         return <View style={{
           flex: 1,
@@ -28,20 +29,19 @@ const Main = (props) => {
         props.name != 'Account' && <View
           style={{
             height: 100,
-            backgroundColor: '#fff',
+            backgroundColor: '#F46138',
             flexDirection: 'row',
             alignItems: 'flex-end',
             padding: 15,
             justifyContent: 'space-between',
-            borderColor: 'gray',
           }}>
           <View style={{ marginLeft: 15 }}>
             <Image
               source={require('../../../assets/sieunhan-removebg-preview.png')}
               resizeMode='contain'
               style={{
-                width: 30,
-                height: 30,
+                width: 35,
+                height: 35,
               }}
             />
           </View>
@@ -53,6 +53,7 @@ const Main = (props) => {
                 style={{
                   width: 25,
                   height: 25,
+                  tintColor: '#fff'
                 }}
               />
             </TouchableOpacity>
@@ -63,6 +64,7 @@ const Main = (props) => {
                 style={{
                   width: 25,
                   height: 25,
+                  tintColor: '#fff'
                 }}
               />
             </TouchableOpacity>
@@ -73,15 +75,16 @@ const Main = (props) => {
                 style={{
                   width: 25,
                   height: 25,
+                  tintColor: '#fff'
                 }}
               />
             </TouchableOpacity>
           </View>
         </View>
       }
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         {renderItem(props.name)}
-      </ScrollView>
+      </View>
     </>
   )
 }

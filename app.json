@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/nen2.png",
+      "image": "./assets/bizlinks.png",
       "resizeMode": "contain",
-      "backgroundColor": "#B81736"
+      "backgroundColor": "#F46138"
     },
     "ios": {
       "supportsTablet": true

@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
                     style={{
                         width: '100%',
                         borderBottomWidth: 1,
-                        borderBottomColor: '#B81736',
+                        borderBottomColor: '#F46138',
                         height: 40,
                         alignItems: 'center',
                         color: '#000',
@@ -43,13 +43,13 @@ const Login = ({ navigation }) => {
                         marginBottom: 20,
                     }}
                     placeholder="Tài khoản"
-                    placeholderTextColor="#B81736"
+                    placeholderTextColor="#F46138"
                 />
                 <TextInput
                     style={{
                         width: '100%',
                         borderBottomWidth: 1,
-                        borderBottomColor: '#B81736',
+                        borderBottomColor: '#F46138',
                         height: 40,
                         alignItems: 'center',
                         color: '#000',
@@ -57,14 +57,14 @@ const Login = ({ navigation }) => {
                         marginBottom: 20,
                     }}
                     placeholder="Mật khẩu"
-                    placeholderTextColor="#B81736"
+                    placeholderTextColor="#F46138"
                     secureTextEntry={true}
                 />
 
                 <TouchableOpacity
                     onPress={() => navigation.navigate("Main")}
                     style={{
-                        backgroundColor: '#B81736',
+                        backgroundColor: '#F46138',
                         borderRadius: 30,
                         paddingVertical: 15,
                         paddingHorizontal: 100,
@@ -102,7 +102,7 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#B81736',
+        backgroundColor: '#F46138',
     },
 });
 
