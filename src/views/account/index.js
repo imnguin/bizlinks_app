@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 const { height } = Dimensions.get('window');
 const Account = (props) => {
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <View style={{
                 height: 250,
                 backgroundColor: '#fff',
@@ -21,7 +21,8 @@ const Account = (props) => {
                         paddingVertical: 4,
                         paddingHorizontal: 10,
                         flexDirection: 'row',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        justifyContent: 'center'
                     }} onPress={() => props.navigation.navigate('Login')}>
                         <Text style={{
                             color: '#ff5454'
@@ -44,7 +45,7 @@ const Account = (props) => {
                     justifyContent: 'flex-end'
                 }}>
                     <Image
-                        source={require('../../../assets/avatar.jpg')}
+                        source={require('../../../assets/sieunhan-removebg-preview.png')}
                         resizeMode='contain'
                         style={{
                             width: 60,
@@ -52,8 +53,8 @@ const Account = (props) => {
                             borderRadius: 50
                         }}
                     />
-                    <Text style={{ fontSize: 12, marginTop: 15 }}>Chào buổi chiều!</Text>
-                    <Text style={{ fontSize: 20, marginTop: 5 }}>LAM XUAN NGUYEN</Text>
+                    <Text style={{ fontSize: 12, marginTop: 15 }}>Xin chào!</Text>
+                    <Text style={{ fontSize: 20, marginTop: 5 }}>SIÊU NHÂN VÀNG</Text>
                 </View>
             </View>
             <View
@@ -156,7 +157,7 @@ const Account = (props) => {
                     marginTop: 5,
                     padding: 15,
                     gap: 20,
-                    marginBottom: 110
+                    marginBottom: 85
                 }}
             >
                 <Text style={{
@@ -273,7 +274,7 @@ const Account = (props) => {
                     />
                 </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
     )
 }
 

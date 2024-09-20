@@ -13,7 +13,7 @@ export const bottomTabs = [
         name: 'Payment',
         image: require('../../assets/payment.png'),
         title: 'Thanh toán',
-        headerShown : true
+        // headerShown : true
     },
     {
         name: 'Message',
