@@ -8,23 +8,22 @@ const Main = (props) => {
   const renderItem = (name) => {
     switch (name) {
       case 'Account':
-        return <Account />
+        return <Account navigation={props.navigation} />
       default:
         return <Text>{name}</Text>
     }
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="auto" />
       {renderItem(props.name)}
-    </SafeAreaView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor : '#8ACDDC'
   }
 })
 

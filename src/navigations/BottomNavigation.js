@@ -42,14 +42,14 @@ const BottomNavigation = () => {
                 headerShown: headerShown,
                 tabBarStyle: {
                     position: 'absolute',
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
                     backgroundColor: 'white',
                     height: 85,
-                    borderRadius: 15,
+                    // borderRadius: 0,
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 },
                 tabBarActiveTintColor: '#009bf8',
             }}
@@ -72,7 +72,7 @@ const BottomNavigation = () => {
                             })}
                             key={key}
                             name={tab.name}
-                            children={() => <Main name={tab.name} />}
+                            children={({ navigation }) => <Main name={tab.name} navigation={navigation} />}
                             options={{
                                 tabBarLabel: ({ focused }) => Platform.OS == 'ios' ? renderTab(focused, tab) : null,
                                 tabBarIcon: ({ focused }) => Platform.OS == 'ios' ? null : renderTab(focused, tab)
