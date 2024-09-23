@@ -18,7 +18,6 @@ const Account = (props) => {
                     }}>
                         <TouchableOpacity style={{
                             borderRadius: 30,
-                            // backgroundColor: '#ffd8d8',
                             backgroundColor: '#fff',
                             paddingVertical: 4,
                             paddingHorizontal: 10,
@@ -64,7 +63,6 @@ const Account = (props) => {
                 <View
                     style={{
                         backgroundColor: '#fff',
-                        marginTop: 5,
                         padding: 15,
                         gap: 20
                     }}

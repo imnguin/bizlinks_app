@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import Account from '../account'
 import { TouchableOpacity } from 'react-native'
 import Order from '../order'
+import Home from '../home'
 
 const Main = (props) => {
   const renderItem = (name) => {
@@ -12,6 +13,8 @@ const Main = (props) => {
         return <Account navigation={props.navigation} />
       case 'Order':
         return <Order navigation={props.navigation} />
+      case 'Home':
+        return <Home navigation={props.navigation} />
       default:
         return <View style={{
           flex: 1,
