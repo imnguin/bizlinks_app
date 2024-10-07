@@ -1,7 +1,20 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import { HOSTNAME } from '../../utils/Constants/SystemVar'
+import { useDispatch } from 'react-redux';
+import { _fetchLogin } from '../../services/callAPI'
 
 const Login = ({ navigation }) => {
+    const dispatch = useDispatch();
+    const [username, setUserName] = useState('');
+    const [password, setPassWord] = useState('');
+    const onLogin = async () => {
+        const response = await dispatch(_fetchLogin(HOSTNAME, 'api/authen/login', { username, password }));
+        console.log(response)
+        if (!response.iserror) {
+            navigation.navigate("Main");
+        }
+    }
     return (
         <View style={styles.container}>
             <View
@@ -44,6 +57,7 @@ const Login = ({ navigation }) => {
                     }}
                     placeholder="Tài khoản"
                     placeholderTextColor="#F46138"
+                    onChangeText={(text) => setUserName(text)}
                 />
                 <TextInput
                     style={{
@@ -59,10 +73,11 @@ const Login = ({ navigation }) => {
                     placeholder="Mật khẩu"
                     placeholderTextColor="#F46138"
                     secureTextEntry={true}
+                    onChangeText={(text) => setPassWord(text)}
                 />
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Main")}
+                    onPress={onLogin}
                     style={{
                         backgroundColor: '#F46138',
                         borderRadius: 30,

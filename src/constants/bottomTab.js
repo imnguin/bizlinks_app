@@ -16,7 +16,7 @@ export const bottomTabs = [
         // headerShown : true
     },
     {
-        name: 'Message',
+        name: 'Chats',
         image: require('../../assets/message.png'),
         title: 'Tin nhắn'
     },
