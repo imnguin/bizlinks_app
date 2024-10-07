@@ -40,8 +40,8 @@ const Chats = ({ navigation }) => {
                             source={require('../../../assets/me.png')}
                             resizeMode='contain'
                             style={{
-                                width: 55,
-                                height: 55,
+                                width: 50,
+                                height: 50,
                                 borderRadius: 30
                             }}
                         />

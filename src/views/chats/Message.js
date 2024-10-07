@@ -3,7 +3,7 @@ import { Image, TouchableOpacity } from 'react-native';
 import { View, Text, TextInput, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Bubble, GiftedChat, Time } from 'react-native-gifted-chat';
 
-const Message = () => {
+const Message = ({ navigation }) => {
     const [focus, setFocus] = useState(false)
     const [onClick, setOnclick] = useState(false)
     const [messages, setMessages] = useState([]);
@@ -164,7 +164,7 @@ const Message = () => {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Image
                                 source={require('../../../assets/back.png')}
                                 resizeMode='contain'
@@ -245,7 +245,7 @@ const Message = () => {
                         />
                     </View>
                 </TouchableWithoutFeedback>
-                
+
 
                 <View style={{ height: focus || onClick ? 50 : 85, ...styles.footer }}>
                     <TouchableOpacity
