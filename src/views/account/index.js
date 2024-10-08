@@ -75,7 +75,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Thiết lập thông tin cá nhân</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/9024845_user_circle_light_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Thiết lập thông tin cá nhân</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -94,7 +105,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Tài khoản thanh toán</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/payment.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Tài khoản thanh toán</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -113,7 +135,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Thông tin điểm thưởng</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/5820397_award_prize_rating_reward_stars_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Thông tin điểm thưởng</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -141,7 +174,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Thông báo</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/211693_bell_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Thông báo</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -170,7 +214,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Đánh giá sản phẩm</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/9045158_review_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Đánh giá sản phẩm</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -189,7 +244,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Trung tâm bảo hành</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/guaranty.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Trung tâm bảo hành</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -208,7 +274,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Phản ánh khiếu nại</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/feedback.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Phản ánh khiếu nại</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -227,7 +304,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Giới thiệu bạn bè</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/3643739_forward_next_right_share_turn_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Giới thiệu bạn bè</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -246,7 +334,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Trung tâm hỗ trợ</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/suport.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Trung tâm hỗ trợ</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
@@ -265,7 +364,18 @@ const Account = (props) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>Thông tin ứng dụng</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 15 }}>
+                            <Image
+                                source={require('../../../assets/3643768_info_information_letter_mark_sign_icon.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: 'gray'
+                                }}
+                            />
+                            <Text style={{ fontSize: 16, color: 'gray' }}>Thông tin ứng dụng</Text>
+                        </View>
                         <Image
                             source={require('../../../assets/nextIcon.png')}
                             resizeMode='contain'
