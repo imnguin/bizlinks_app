@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Image, Platform } from 'react-native';
 
 const CustomInputToolbar = React.memo(({ onSend }) => {
     const [text, setText] = useState('');
@@ -13,7 +13,7 @@ const CustomInputToolbar = React.memo(({ onSend }) => {
 
     return (
         <View style={{
-            height: 85,
+            height: Platform.OS == 'ios' ? 85 : 60,
             backgroundColor: '#fff',
             flexDirection: 'row',
             gap: 15,

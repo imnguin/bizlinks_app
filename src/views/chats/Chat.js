@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Bubble, GiftedChat, Message } from 'react-native-gifted-chat';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import CustomInputToolbar from './CustomInputToolbar'; // Import component tự tạo
 
 const Chat = ({ navigation }) => {
@@ -91,104 +91,107 @@ const Chat = ({ navigation }) => {
     };
 
     return (
-        <View style={{
-            flex: 1
-        }}>
+        <>
             <View style={{
-                height: 95,
-                backgroundColor: '#F46138',
-                flexDirection: 'row',
-                alignItems: 'flex-end',
-                paddingLeft: 15,
-                paddingRight: 15,
-                paddingBottom: 10
+                flex: 1
             }}>
                 <View style={{
+                    height: 95,
+                    backgroundColor: '#F46138',
                     flexDirection: 'row',
-                    gap: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    alignItems: 'flex-end',
+                    paddingLeft: 15,
+                    paddingRight: 15,
+                    paddingBottom: 10,
                 }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image
-                            source={require('../../../assets/back.png')}
-                            resizeMode='contain'
+                    <View style={{
+                        flexDirection: 'row',
+                        gap: 15,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image
+                                source={require('../../../assets/back.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: '#fff',
+                                }}
+                            />
+                        </TouchableOpacity>
+                        <View
                             style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: '#fff',
+                                flex: 1,
+                                gap: 3
                             }}
-                        />
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            flex: 1,
-                            gap: 3
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontSize: 17,
-                                fontWeight: '500',
-                                color: '#fff'
-                            }}
-                        >Lâm Xuân Nguyên</Text>
-                        <Text
-                            style={{
-                                fontSize: 12,
-                                color: '#fff'
-                            }}>Vừa mới truy cập</Text>
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 17,
+                                    fontWeight: '500',
+                                    color: '#fff'
+                                }}
+                            >Lâm Xuân Nguyên</Text>
+                            <Text
+                                style={{
+                                    fontSize: 12,
+                                    color: '#fff'
+                                }}>Vừa mới truy cập</Text>
+                        </View>
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../../assets/call.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: '#fff'
+                                }}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../../assets/video_call.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: '#fff'
+                                }}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../../assets/list.png')}
+                                resizeMode='contain'
+                                style={{
+                                    width: 25,
+                                    height: 25,
+                                    tintColor: '#fff'
+                                }}
+                            />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
-                        <Image
-                            source={require('../../../assets/call.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: '#fff'
-                            }}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image
-                            source={require('../../../assets/video_call.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: '#fff'
-                            }}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image
-                            source={require('../../../assets/list.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 25,
-                                height: 25,
-                                tintColor: '#fff'
-                            }}
-                        />
-                    </TouchableOpacity>
                 </View>
+                <GiftedChat
+                    messages={messages}
+                    onSend={(messages) => onSend(messages)}
+                    user={{
+                        _id: 1
+                    }}
+                    renderMessage={(props) => <CustomMessage {...props} />}
+                    renderInputToolbar={(props) => (
+                        <CustomInputToolbar
+                            onSend={(message) => props.onSend([{ text: message.text, user: props.user }])}
+                        />
+                    )}
+                    renderBubble={renderBubble}
+                    isStatusBarTranslucentAndroid={true}
+                />
             </View>
-            <GiftedChat
-                messages={messages}
-                onSend={(messages) => onSend(messages)}
-                user={{
-                    _id: 1
-                }}
-                renderMessage={(props) => <CustomMessage {...props} />}
-                renderInputToolbar={(props) => (
-                    <CustomInputToolbar
-                        onSend={(message) => props.onSend([{ text: message.text, user: props.user }])}
-                    />
-                )}
-                renderBubble={renderBubble}
-            />
-        </View>
+        </>
     );
 };
 

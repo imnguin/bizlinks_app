@@ -12,12 +12,10 @@ const setDataStore = async (key, value) => {
 const getDataStore = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
-        if (value !== null) {
-            console.log('Data retrieved:', value);
-            return value;
-        }
+        return value;
     } catch (error) {
         console.error('Error retrieving data:', error);
+        return null;
     }
 };
 

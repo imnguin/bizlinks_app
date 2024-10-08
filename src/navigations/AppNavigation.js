@@ -5,17 +5,17 @@ import { views } from '../views'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { checkAuthen } from '../services/checkAuthen';
+import { getDataStore } from '../utils/funtions';
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = ({ navigation }) => {
-    const [initialRouteName, setInitialRouteName] = useState('Login')
+    const [initialRouteName, setInitialRouteName] = useState('')
     useEffect(() => {
         const checkLogin = async () => {
-            return await checkAuthen()
+            const logininfo = await getDataStore('logininfo');
+            setInitialRouteName(!!logininfo ? 'Main' : 'Login')
         }
-        if (checkLogin()) {
-            setInitialRouteName('Main')
-        }
+        checkLogin();
     }, [])
     return (
         <SafeAreaProvider>

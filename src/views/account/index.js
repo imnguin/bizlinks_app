@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Dimensions, Image } from 'react-native'
+import { View, Text, ScrollView, Dimensions, Image, Platform } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
 const { height } = Dimensions.get('window');
@@ -7,7 +7,7 @@ const Account = (props) => {
         <ScrollView>
             <View style={{ flex: 1 }}>
                 <View style={{
-                    height: 250,
+                    height: Platform.OS == 'ios' ? 250 : 265,
                     backgroundColor: '#F46138',
                 }}>
                     <View style={{
@@ -43,7 +43,7 @@ const Account = (props) => {
 
                     <View style={{
                         alignItems: 'center',
-                        justifyContent: 'flex-end'
+                        justifyContent: 'flex-end',
                     }}>
                         <Image
                             source={require('../../../assets/sieunhan-removebg-preview.png')}
