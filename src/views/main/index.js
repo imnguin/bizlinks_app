@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import Account from '../account'
+import Account from '../Account'
 import { TouchableOpacity } from 'react-native'
-import Order from '../order'
-import Home from '../home'
-import Chats from '../chats'
+import Order from '../Order'
+import Home from '../Home'
+import Chats from '../Chats'
 
 const Main = (props) => {
   const element = {

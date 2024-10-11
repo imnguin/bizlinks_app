@@ -1,7 +1,7 @@
 import BottomNavigation from '../navigations/BottomNavigation'
-import Login from './login'
-import Message from './chats/Message'
-import Chat from './chats/Chat'
+import Login from './Login'
+import Message from './Chats/Message'
+import Chat from './Chats/Chat'
 
 export const views = [
     {

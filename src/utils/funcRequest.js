@@ -1,5 +1,5 @@
 import { getTokens, saveTokens } from "./funcKeychain";
-import { HOST_LIST } from "../utils/Constants/SystemVar";
+import { HOST_LIST } from "./Constants/systemVar";
 
 const headerDefautl = {
     'user-agent': 'Mozilla/4.0 MDN Example',

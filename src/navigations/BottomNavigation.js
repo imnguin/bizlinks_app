@@ -1,7 +1,7 @@
 import { View, Text, Platform, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Main from '../views/main'
+import Main from '../views/Main'
 import { bottomTabs } from '../constants/bottomTab'
 const Tab = createBottomTabNavigator()
 const BottomNavigation = () => {

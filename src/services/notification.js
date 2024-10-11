@@ -1,4 +1,3 @@
-// NotificationService.js
 import * as Notifications from 'expo-notifications';
 
 // Cấp quyền cho thông báo
