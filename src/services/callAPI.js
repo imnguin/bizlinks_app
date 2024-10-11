@@ -30,9 +30,6 @@ const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
             resultObject: null
         }
     }
-    finally {
-        dispatch(setLoading(false));
-    }
 }
 
 const _fetchData = (hostName, apiPath, data, method = 'POST') => async (dispatch, state) => {
