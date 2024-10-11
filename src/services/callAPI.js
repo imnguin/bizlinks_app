@@ -2,10 +2,12 @@ import { _fetchAPI, _fetchAPILogin } from "../utils/funcRequest"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setDataStore } from "../utils/funtions";
 import { saveTokens } from "../utils/funcKeychain";
-
+import { hideLoading, showLoading } from "../redux/reducers";
 const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
     try {
+        dispatch(showLoading(true));
         const apiResult = await _fetchAPILogin(hostName, apiPath, data);
+        dispatch(hideLoading());
         if (!apiResult.iserror) {
             const { accessToken, refreshToken } = apiResult.resultObject;
             await saveTokens(accessToken, refreshToken);
@@ -28,11 +30,16 @@ const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
             resultObject: null
         }
     }
+    finally {
+        dispatch(setLoading(false));
+    }
 }
 
 const _fetchData = (hostName, apiPath, data, method = 'POST') => async (dispatch, state) => {
     try {
+        dispatch(showLoading(true));
         const logininfo = JSON.parse(AsyncStorage.getItem('logininfo'));
+        dispatch(hideLoading());
         const _header = {
             'user-agent': 'Mozilla/4.0 MDN Example',
             'Access-Control-Allow-Origin': '*',

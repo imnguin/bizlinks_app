@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { HOSTNAME } from '../../utils/Constants/SystemVar'
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,7 @@ const Login = ({ navigation }) => {
     const dispatch = useDispatch();
     const [username, setUserName] = useState('');
     const [password, setPassWord] = useState('');
+    const [disableSubmit, setDisableSubmit] = useState(true);
     const onLogin = async () => {
         const response = await dispatch(_fetchLogin(HOSTNAME, 'api/authen/login', { username, password }));
         console.log(response)
@@ -33,6 +34,9 @@ const Login = ({ navigation }) => {
                     }}
                 >Bizlinks{'\n'}Đăng nhập!</Text>
             </View>
+            <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        ></KeyboardAvoidingView>
             <View
                 style={{
                     backgroundColor: '#fff',
@@ -77,9 +81,10 @@ const Login = ({ navigation }) => {
                 />
 
                 <TouchableOpacity
+                    disabled={!username || !password}
                     onPress={onLogin}
                     style={{
-                        backgroundColor: '#F46138',
+                        backgroundColor: !username || !password ? 'gray' : '#F46138',
                         borderRadius: 30,
                         paddingVertical: 15,
                         paddingHorizontal: 100,

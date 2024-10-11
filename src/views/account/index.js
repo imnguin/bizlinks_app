@@ -1,8 +1,20 @@
 import { View, Text, ScrollView, Dimensions, Image, Platform } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteTokens } from '../../utils/funcKeychain'
 const { height } = Dimensions.get('window');
 const Account = (props) => {
+    const logOut = async () => {
+        try {
+            await deleteTokens();
+            await AsyncStorage.removeItem('logininfo');
+            props.navigation.navigate('Login');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    };
+
     return (
         <ScrollView>
             <View style={{ flex: 1 }}>
@@ -24,7 +36,7 @@ const Account = (props) => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'center'
-                        }} onPress={() => props.navigation.navigate('Login')}>
+                        }} onPress={logOut}>
                             <Text style={{
                                 color: '#ff5454'
                             }}
