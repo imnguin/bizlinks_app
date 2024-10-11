@@ -3,8 +3,15 @@ import AppNavigation from './src/navigations/AppNavigation';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import GlobalLoader from './src/views/loader';
-
+import { requestNotificationPermissions, configureNotificationHandler } from './src/services/NotificationService'
+import { useEffect } from 'react';
 export default function App() {
+  useEffect(() => {
+    // Cấp quyền thông báo và cấu hình 1 lần khi ứng dụng khởi chạy
+    requestNotificationPermissions();
+    configureNotificationHandler();
+  }, []);
+
   return (
     <Provider store={store}>
       <GlobalLoader />

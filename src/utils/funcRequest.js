@@ -7,9 +7,17 @@ const headerDefautl = {
     'Access-Control-Allow-Origin': '*'
 }
 
+const fetchWithTimeout = (url, options, timeout = 15000) => {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Network request timed out')), timeout)
+        )
+    ]);
+};
+
 export const _fetchAPILogin = async (hostName, apiPath, data = {}, _header = headerDefautl, method = 'POST') => {
     try {
-        console.log('hostName , apiPath',hostName, apiPath)
         let requestData = {
             cache: 'no-cache',
             credentials: 'same-origin',
@@ -27,13 +35,16 @@ export const _fetchAPILogin = async (hostName, apiPath, data = {}, _header = hea
                 body: typeof data === 'object' ? JSON.stringify(data) : JSON.stringify({ data })
             }
         }
-        console.log('url',`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData)
-        let response = await fetch(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
+
+        const response = await fetchWithTimeout(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         return await response.json();
     } catch (error) {
         return {
             iserror: true,
-            message: "Lỗi hệ thống, vui lòng liên hệ quản trị viên!",
+            message: error.message,
             messagedetail: error.stack,
             resultObject: null
         }
@@ -69,11 +80,10 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
             }
         }
 
-        let response = await fetch(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
+        const response = await fetchWithTimeout(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
         if (response.status === 401) {
             const refresh = await refreshToken();
             if (refresh.iserror) {
-                // Thông báo và đá ra màn hình đăng nhập
                 return
             }
             const newAccessToken = refresh.resultObject.accessToken;
@@ -85,7 +95,7 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
     } catch (error) {
         return {
             iserror: true,
-            message: "Lỗi hệ thống, vui lòng liên hệ quản trị viên!",
+            message: error.message,
             messagedetail: error.stack,
             resultObject: null
         }
