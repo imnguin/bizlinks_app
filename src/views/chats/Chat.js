@@ -2,8 +2,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Bubble, GiftedChat, Message } from 'react-native-gifted-chat';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import CustomInputToolbar from './CustomInputToolbar'; // Import component tự tạo
-
+import { getDataStore, getNameInitials } from '../../utils/funtions';
 const Chat = ({ navigation }) => {
+    const [userInfo, setUserInfo] = useState(null);
+    useEffect(() => {
+        const getInfo = async () => {
+            setUserInfo(await getDataStore('logininfo'))
+        }
+        getInfo();
+    }, []);
+
     const [messages, setMessages] = useState([]);
 
     const onSend = useCallback((newMessages = []) => {
@@ -46,7 +54,7 @@ const Chat = ({ navigation }) => {
             <View>
                 <Message {...props} />
                 {
-                    currentMessage._id === messages[0]._id && currentMessage.user._id === 1 && <View
+                    currentMessage._id === messages[0]._id && currentMessage.user._id === userInfo.username && <View
                         style={{
                             alignSelf: 'flex-end',
                             borderRadius: 7,
@@ -80,10 +88,10 @@ const Chat = ({ navigation }) => {
                 {...props}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: '#F46138', // Màu cho tin nhắn của người dùng
+                        backgroundColor: '#F46138',
                     },
                     left: {
-                        backgroundColor: '#e5e5ea', // Màu cho tin nhắn của ChatGPT
+                        backgroundColor: '#e5e5ea',
                     },
                 }}
             />
@@ -91,107 +99,106 @@ const Chat = ({ navigation }) => {
     };
 
     return (
-        <>
+        userInfo &&
+        <View style={{
+            flex: 1
+        }}>
             <View style={{
-                flex: 1
+                height: 95,
+                backgroundColor: '#F46138',
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                paddingLeft: 15,
+                paddingRight: 15,
+                paddingBottom: 10,
             }}>
                 <View style={{
-                    height: 95,
-                    backgroundColor: '#F46138',
                     flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    paddingBottom: 10,
+                    gap: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>
-                    <View style={{
-                        flexDirection: 'row',
-                        gap: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Image
-                                source={require('../../../assets/back.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width: 25,
-                                    height: 25,
-                                    tintColor: '#fff',
-                                }}
-                            />
-                        </TouchableOpacity>
-                        <View
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image
+                            source={require('../../../assets/back.png')}
+                            resizeMode='contain'
                             style={{
-                                flex: 1,
-                                gap: 3
+                                width: 25,
+                                height: 25,
+                                tintColor: '#fff',
                             }}
-                        >
-                            <Text
-                                style={{
-                                    fontSize: 17,
-                                    fontWeight: '500',
-                                    color: '#fff'
-                                }}
-                            >Lâm Xuân Nguyên</Text>
-                            <Text
-                                style={{
-                                    fontSize: 12,
-                                    color: '#fff'
-                                }}>Vừa mới truy cập</Text>
-                        </View>
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../../assets/call.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width: 25,
-                                    height: 25,
-                                    tintColor: '#fff'
-                                }}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../../assets/video_call.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width: 25,
-                                    height: 25,
-                                    tintColor: '#fff'
-                                }}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../../assets/list.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width: 25,
-                                    height: 25,
-                                    tintColor: '#fff'
-                                }}
-                            />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <GiftedChat
-                    messages={messages}
-                    onSend={(messages) => onSend(messages)}
-                    user={{
-                        _id: 1
-                    }}
-                    renderMessage={(props) => <CustomMessage {...props} />}
-                    renderInputToolbar={(props) => (
-                        <CustomInputToolbar
-                            onSend={(message) => props.onSend([{ text: message.text, user: props.user }])}
                         />
-                    )}
-                    renderBubble={renderBubble}
-                    isStatusBarTranslucentAndroid={true}
-                />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            flex: 1,
+                            gap: 3
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 17,
+                                fontWeight: '500',
+                                color: '#fff'
+                            }}
+                        >Lâm Xuân Nguyên</Text>
+                        <Text
+                            style={{
+                                fontSize: 12,
+                                color: '#fff'
+                            }}>Vừa mới truy cập</Text>
+                    </View>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../../../assets/call.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: '#fff'
+                            }}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../../../assets/video_call.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: '#fff'
+                            }}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image
+                            source={require('../../../assets/list.png')}
+                            resizeMode='contain'
+                            style={{
+                                width: 25,
+                                height: 25,
+                                tintColor: '#fff'
+                            }}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
-        </>
+            <GiftedChat
+                messages={messages}
+                onSend={(messages) => onSend(messages)}
+                user={{
+                    _id: userInfo.username
+                }}
+                renderMessage={(props) => <CustomMessage {...props} />}
+                renderInputToolbar={(props) => (
+                    <CustomInputToolbar
+                        onSend={(message) => props.onSend([{ text: message.text, user: props.user }])}
+                    />
+                )}
+                renderBubble={renderBubble}
+                isStatusBarTranslucentAndroid={true}
+            />
+        </View>
     );
 };
 

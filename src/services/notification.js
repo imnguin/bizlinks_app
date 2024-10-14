@@ -9,7 +9,7 @@ export const requestNotificationPermissions = async () => {
 };
 
 // Hiển thị thông báo cục bộ
-export const showNotification = async (title, body) => {
+export const showNotification = async (title, body, callback) => {
     await Notifications.scheduleNotificationAsync({
         content: {
             title: title,
@@ -17,7 +17,12 @@ export const showNotification = async (title, body) => {
         },
         trigger: null, // Gửi ngay lập tức
     });
+
+    if (callback && typeof callback === "function") {
+        callback(); // Gọi callback sau khi thông báo được gửi
+    }
 };
+
 
 // Cấu hình cách hiển thị thông báo
 export const configureNotificationHandler = () => {

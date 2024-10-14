@@ -1,5 +1,6 @@
 import { getTokens, saveTokens } from "./funcKeychain";
 import { HOST_LIST } from "./Constants/systemVar";
+import { showNotification } from "../services/notification";
 
 const headerDefautl = {
     'user-agent': 'Mozilla/4.0 MDN Example',
@@ -38,7 +39,7 @@ export const _fetchAPILogin = async (hostName, apiPath, data = {}, _header = hea
 
         const response = await fetchWithTimeout(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            showNotification("Thông báo!", 'HTTP error! Status: ${response.status}');
         }
         return await response.json();
     } catch (error) {

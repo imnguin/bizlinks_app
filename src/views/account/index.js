@@ -1,10 +1,19 @@
 import { View, Text, ScrollView, Dimensions, Image, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteTokens } from '../../utils/funcKeychain'
+import { getDataStore, getNameInitials } from '../../utils/funtions';
 const { height } = Dimensions.get('window');
 const Account = (props) => {
+    const [userInfo, setUserInfo] = useState(null);
+    useEffect(() => {
+        const getInfo = async () => {
+            setUserInfo(await getDataStore('logininfo'))
+        }
+        getInfo();
+    }, []);
+
     const logOut = async () => {
         try {
             await deleteTokens();
@@ -16,7 +25,7 @@ const Account = (props) => {
     };
 
     return (
-        <ScrollView>
+        !!userInfo && <ScrollView>
             <View style={{ flex: 1 }}>
                 <View style={{
                     height: Platform.OS == 'ios' ? 250 : 265,
@@ -57,19 +66,34 @@ const Account = (props) => {
                         alignItems: 'center',
                         justifyContent: 'flex-end',
                     }}>
-                        <Image
-                            source={require('../../../assets/sieunhan-removebg-preview.png')}
-                            resizeMode='contain'
-                            style={{
-                                width: 70,
-                                height: 70,
-                                borderRadius: 50,
-                                borderWidth: 3,
-                                borderColor: '#fff'
-                            }}
-                        />
+                        {
+                            userInfo.thumbnail ?
+                                <Image
+                                    source={{ uri: userInfo.thumbnail }}
+                                    resizeMode='contain'
+                                    style={{
+                                        width: 70,
+                                        height: 70,
+                                        borderRadius: 50,
+                                        borderWidth: 3,
+                                        borderColor: '#fff'
+                                    }}
+                                />
+                                :
+                                <View style={{
+                                    width: 70,
+                                    height: 70,
+                                    borderRadius: 50,
+                                    borderWidth: 3,
+                                    borderColor: '#fff',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>{getNameInitials(userInfo.fullname)}</Text>
+                                </View>
+                        }
                         <Text style={{ fontSize: 12, marginTop: 10, color: '#fff' }}>Xin chào!</Text>
-                        <Text style={{ fontSize: 20, marginTop: 5, color: '#fff' }}>SIÊU NHÂN VÀNG</Text>
+                        <Text style={{ fontSize: 20, marginTop: 5, color: '#fff' }}>{userInfo.fullname}</Text>
                     </View>
                 </View>
                 <View

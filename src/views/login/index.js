@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { HOSTNAME } from '../../utils/Constants/systemVar'
 import { useDispatch } from 'react-redux';
 import { _fetchLogin } from '../../services/callAPI'
-// import { showNotification } from '../../services/notification';
+import { showNotification } from '../../services/notification';
 
 const Login = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -18,9 +18,9 @@ const Login = ({ navigation }) => {
     const onLogin = async () => {
         const response = await dispatch(_fetchLogin(HOSTNAME, 'api/authen/login', { username, password }));
         if (!response.iserror) {
-            navigation.navigate("Main");
+            console.log(response)
+            showNotification("Thông báo", "Đăng nhập thành công!", navigation.navigate("Main"));
         } else {
-            // showNotification("Lỗi API", "Đã xảy ra lỗi trong quá trình gọi API");
             Alert.alert(
                 "Thông báo",
                 response.message,
