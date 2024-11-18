@@ -7,7 +7,6 @@ import { requestNotificationPermissions, configureNotificationHandler } from './
 import { useEffect } from 'react';
 export default function App() {
   useEffect(() => {
-    // Cấp quyền thông báo và cấu hình 1 lần khi ứng dụng khởi chạy
     requestNotificationPermissions();
     configureNotificationHandler();
   }, []);

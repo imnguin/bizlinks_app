@@ -6,19 +6,21 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { checkAuthen } from '../services/checkAuthen';
 import { getDataStore } from '../utils/funtions';
+import { StatusBar } from 'expo-status-bar';
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = ({ navigation }) => {
-    const [initialRouteName, setInitialRouteName] = useState('')
+    const [initialRouteName, setInitialRouteName] = useState('Main')
     useEffect(() => {
-        const checkLogin = async () => {
-            const logininfo = await getDataStore('logininfo');
-            setInitialRouteName(!!logininfo ? 'Main' : 'Login')
-        }
-        checkLogin();
+        // const checkLogin = async () => {
+        //     const logininfo = await getDataStore('logininfo');
+        //     setInitialRouteName(!!logininfo ? 'Main' : 'Login')
+        // }
+        // checkLogin();
     }, [])
     return (
         <SafeAreaProvider>
+            <StatusBar style="auto" />
             <NavigationContainer>
                 <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false }}>
                     {

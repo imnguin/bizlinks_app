@@ -25,7 +25,8 @@ const Account = (props) => {
     };
 
     return (
-        !!userInfo && <ScrollView>
+        !!userInfo && 
+        <ScrollView>
             <View style={{ flex: 1 }}>
                 <View style={{
                     height: Platform.OS == 'ios' ? 250 : 265,

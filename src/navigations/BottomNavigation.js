@@ -1,13 +1,9 @@
-import { View, Text, Platform, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, Platform, Image, TouchableOpacity, TextInput } from 'react-native'
+import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Main from '../views/Main'
 import { bottomTabs } from '../constants/bottomTab'
 const Tab = createBottomTabNavigator()
 const BottomNavigation = () => {
-    const [headerShown, setHeaderShown] = useState(false);
-    const [headerTitle, setHeaderTitle] = useState(undefined);
-
     const renderTab = (focused, tab) => {
         return (
             <View style={{
@@ -34,12 +30,48 @@ const BottomNavigation = () => {
             </View>
         )
     }
+
+    const renderHeader = (tab) => {
+        return (
+            !!tab.isHeaderCustom ? <tab.headerCustom title={tab.title} />
+                : <View
+                    style={{ height: 95, backgroundColor: '#F46138', flexDirection: 'row', alignItems: 'flex-end', paddingLeft: 15, paddingRight: 15, paddingBottom: 15 }}>
+                    <View style={{ flexDirection: 'row', gap: 15, }}>
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../assets/211818_search_icon.png')}
+                                resizeMode='contain'
+                                style={{ width: 25, height: 25, tintColor: '#fff', }}
+                            />
+                        </TouchableOpacity>
+                        <TextInput
+                            placeholder="Tìm kiếm"
+                            placeholderTextColor={'#fff'}
+                            style={{ borderRadius: 7, flex: 1, fontSize: 15, color: '#fff' }}
+                        />
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../assets/211693_bell_icon.png')}
+                                resizeMode='contain'
+                                style={{ width: 25, height: 25, tintColor: '#fff' }}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image
+                                source={require('../../assets/8545624_qr_code_scan_program_barcode_icon.png')}
+                                resizeMode='contain'
+                                style={{ width: 25, height: 25, tintColor: '#fff' }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+        )
+    }
+
     return (
         <Tab.Navigator
             detachInactiveScreens
             screenOptions={{
-                title: headerTitle,
-                headerShown: headerShown,
                 tabBarStyle: {
                     position: 'absolute',
                     bottom: 0,
@@ -57,24 +89,18 @@ const BottomNavigation = () => {
                 bottomTabs.map((tab, key) => {
                     return (
                         <Tab.Screen
-                            listeners={({ navigation, route }) => ({
-                                focus: (e) => {
-                                    const currentKey = route.key;
-                                    if (currentKey.includes(tab.name) && !!tab.headerShown) {
-                                        setHeaderShown(true);
-                                        setHeaderTitle(tab.title);
-                                    } else {
-                                        setHeaderShown(false);
-                                        setHeaderTitle(undefined);
-                                    }
-                                }
-                            })}
                             key={key}
                             name={tab.name}
-                            children={({ navigation }) => <Main name={tab.name} navigation={navigation} />}
+                            children={({ navigation }) => <View style={{ flex: 1 }}>{tab.component ? <tab.component navigation={navigation} /> : <Text>{tab.title}</Text>}</View>}
                             options={{
+                                headerShown: tab.headerShown,
+                                title: tab.title || undefined,
                                 tabBarLabel: ({ focused }) => Platform.OS == 'ios' ? renderTab(focused, tab) : null,
-                                tabBarIcon: ({ focused }) => Platform.OS == 'ios' ? null : renderTab(focused, tab)
+                                tabBarIcon: ({ focused }) => Platform.OS == 'ios' ? null : renderTab(focused, tab),
+                                ...(!tab.isHeaderDefault && { header: () => renderHeader(tab) }),
+                                headerStyle: {
+                                    height: 95
+                                }
                             }}
                         />
                     )
