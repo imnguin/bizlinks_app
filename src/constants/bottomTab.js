@@ -35,11 +35,11 @@ export const bottomTabs = [
     //     headerShown: true,
     //     component: Chats
     // },
-    // {
-    //     name: 'Account',
-    //     image: require('../../assets/account.png'),
-    //     title: 'Tài khoản',
-    //     headerShown: false,
-    //     component : Account
-    // },
+    {
+        name: 'Account',
+        image: require('../../assets/account.png'),
+        title: 'Tài khoản',
+        headerShown: false,
+        component : Account
+    },
 ]

@@ -13,12 +13,14 @@ const Header = (props) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-end',
-                paddingBottom: 10
+                paddingBottom: 10,
+                backgroundColor: '#F46138'
             }}>
                 <Text
                     style={{
-                        fontSize: 20,
-                        fontWeight : 'bold'
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                        color: '#fff'
                     }}
                 >{title}</Text>
             </View>

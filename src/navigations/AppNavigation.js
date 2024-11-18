@@ -10,13 +10,13 @@ import { StatusBar } from 'expo-status-bar';
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = ({ navigation }) => {
-    const [initialRouteName, setInitialRouteName] = useState('Main')
+    const [initialRouteName, setInitialRouteName] = useState('Login')
     useEffect(() => {
-        // const checkLogin = async () => {
-        //     const logininfo = await getDataStore('logininfo');
-        //     setInitialRouteName(!!logininfo ? 'Main' : 'Login')
-        // }
-        // checkLogin();
+        const checkLogin = async () => {
+            const logininfo = await getDataStore('logininfo');
+            setInitialRouteName(!!logininfo ? 'Main' : 'Login')
+        }
+        checkLogin();
     }, [])
     return (
         <SafeAreaProvider>

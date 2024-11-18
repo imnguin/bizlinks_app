@@ -140,5 +140,65 @@ const Abc = () => {
     //         </View>
     //     </ScrollView>
     // )
+
+    // <View
+    //             style={{
+    //                 backgroundColor: '#F46138',
+    //                 height: 200,
+    //                 marginTop: 40,
+    //                 marginLeft: 10,
+    //                 marginRight: 10,
+    //                 borderRadius: 5,
+    //                 borderColor: 'grey',
+    //                 backgroundColor: '#fff',
+    //                 shadowColor: '#000',
+    //                 shadowOffset: { width: 0, height: 2 },
+    //                 shadowOpacity: 0.3,
+    //                 shadowRadius: 4,
+    //                 elevation: 5,
+    //             }}
+    //         >
+    //             {/* <Text style={{
+    //                 position: 'absolute',
+    //                 top: -12,
+    //                 // left: '5%',
+    //                 backgroundColor: '#fff',
+    //                 paddingHorizontal: 10,
+    //                 fontSize: 14,
+    //                 zIndex: 10,
+    //                 fontWeight: '600'
+    //             }}>Vừa mới sử dụng</Text> */}
+
+    //             <View
+    //                 style={{
+    //                     height: 30,
+    //                     position: 'absolute',
+    //                     top: -15,
+    //                     zIndex: 10,
+    //                     paddingHorizontal: 10,
+    //                     left: '50%',
+    //                     transform: [{ translateX: '-50%' }],
+    //                 }}
+    //             >
+    //                 <TextInput
+    //                     placeholder="Tìm kiếm"
+    //                     placeholderTextColor={'#F46138'}
+    //                     style={{
+    //                         borderRadius: 7,
+    //                         flex: 1,
+    //                         fontSize: 15,
+    //                         backgroundColor: '#fff',
+    //                         width: '350',
+    //                         borderColor: 'grey',
+    //                         backgroundColor: '#fff',
+    //                         shadowColor: '#000',
+    //                         shadowOffset: { width: 0, height: 1 },
+    //                         shadowOpacity: 0.2,
+    //                         shadowRadius: 4,
+    //                         elevation: 5,
+    //                     }}
+    //                 />
+    //             </View>
+    //         </View>
 }
 export default Abc

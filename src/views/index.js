@@ -1,7 +1,7 @@
 import BottomNavigation from '../navigations/BottomNavigation'
 import Login from './Login'
 import Chat from './Chats/Chat'
-// import Home from './BCNB/Home'
+import Timekeeping from './Timekeeping'
 
 export const views = [
     {
@@ -16,8 +16,8 @@ export const views = [
         name: 'Message',
         component: Chat
     },
-    // {
-    //     name: 'HomeBCNB',
-    //     component: Home
-    // },
+    {
+        name: 'Timekeeping',
+        component: Timekeeping
+    },
 ]
