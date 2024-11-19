@@ -2,7 +2,7 @@ import Home from '../views/Home'
 import Account from '../views/Account';
 import Chats from '../views/Chats';
 import Order from '../views/Order';
-import Header from '../views/Home/Header';
+import Header from '../components/Header';
 
 export const bottomTabs = [
     {

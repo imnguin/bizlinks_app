@@ -1,12 +1,56 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Header from '../../components/Header'
+import { calculateTimeLeft, formatTime } from '../../utils/funtions';
 
-const Timekeeping = () => {
+const Timekeeping = ({ navigation }) => {
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [timeCheckIn, setTimeCheckIn] = useState(null);
+  const [timeCheckOut, setTimeCheckOut] = useState(null);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft((prevTime) => Math.max(prevTime - 1, 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (!!timeCheckIn) {
+      setTimeLeft(calculateTimeLeft(timeCheckIn.hours, timeCheckIn.minutes, timeCheckIn.seconds));
+    }
+  }, [timeCheckIn])
+
+  const checkIn = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    updateTimekeeping('checkin', { hours, minutes, seconds });
+  };
+
+  const checkOut = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    updateTimekeeping('checkout', { hours, minutes, seconds })
+  };
+
+  const updateTimekeeping = (key, time) => {
+    console.log('key, time', key, time)
+    if (key == 'checkin') {
+      setTimeCheckIn(time)
+    }
+
+    if (key == 'checkout') {
+      setTimeCheckOut(time)
+      setTimeCheckIn({ hours: 0, minutes: 0, seconds: 0 })
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Chấm công</Text>
-      </View>
+      <Header title='Chấm công' />
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <Image
@@ -16,14 +60,15 @@ const Timekeeping = () => {
           />
           <View style={styles.cardContentTimerRow}>
             <Text style={styles.cardContentTimerText}>Còn lại </Text>
-            <Text
-              style={styles.cardContentTimerHighlight}>05 giờ, 32 phút, 21 giây</Text>
+            <Text style={styles.cardContentTimerHighlight}>{formatTime(timeLeft)}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.btnTimekeeping}>
-          <Text style={styles.btnTimekeepingText}>Chấm công ngay</Text>
+        <TouchableOpacity
+          style={{ ...styles.btnTimekeeping, backgroundColor: !!timeCheckOut ? 'gray' : '#F46138' }}
+          onPress={!timeCheckIn ? checkIn : checkOut}
+          disabled={!!timeCheckOut ? true : false}>
+          <Text style={styles.btnTimekeepingText}>{!timeCheckIn ? 'Chấm công vào' : 'Chấm công ra'}</Text>
         </TouchableOpacity>
-
         <View style={styles.timekeepingInfo}>
           <View style={styles.timekeepingInfoRow}>
             <View style={styles.timekeepingInfoRowContent}>
@@ -46,7 +91,7 @@ const Timekeeping = () => {
               />
               <Text style={styles.timekeepingInfoText}>Giờ vào</Text>
             </View>
-            <Text style={styles.timekeepingInfoText}>08:00</Text>
+            <Text style={styles.timekeepingInfoText}>00:00</Text>
           </View>
           <View style={styles.timekeepingInfoHr} />
           <View style={styles.timekeepingInfoRow}>
@@ -61,56 +106,20 @@ const Timekeeping = () => {
           </View>
         </View>
       </View>
-      <View
-        style={{
-          borderRadius: 15,
-          borderColor: 'grey',
-          backgroundColor: '#fff',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.3,
-          shadowRadius: 4,
-          elevation: 5,
-          marginTop: 25,
-          marginRight: 10,
-          marginLeft: 10,
-          alignItems: 'flex-start',
-          justifyContent: 'center'
-        }}
-      >
-        <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 15,
-            width: '100%',
-            justifyContent: 'space-between'
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
+      <View style={styles.history}>
+        <TouchableOpacity style={styles.btnHistory} onPress={() => navigation.navigate("TimekeepingHistory")}>
+          <View style={styles.historyRow}>
             <Image
               source={require('../../../assets/history_timekeeping_icon.png')}
               resizeMode='contain'
-              style={{
-                width: 30,
-                height: 30,
-                tintColor: '#F46138'
-              }}
+              style={styles.historyIcon}
             />
-            <Text style={{ fontSize: 17, fontWeight: '500', color: '#F46138', marginLeft: 10 }}>Lịch sử chấm công</Text>
+            <Text style={styles.historyText}>Lịch sử chấm công</Text>
           </View>
           <Image
             source={require('../../../assets/nextIcon.png')}
             resizeMode='contain'
-            style={{
-              width: 30,
-              height: 30,
-              tintColor: '#F46138'
-            }}
+            style={styles.historyIcon}
           />
         </TouchableOpacity>
       </View>
@@ -122,18 +131,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  },
-  header: {
-    height: 95,
-    backgroundColor: '#F46138',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: 10
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff'
   },
   card: {
     marginTop: 25,
@@ -222,6 +219,43 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#F46138',
     fontWeight: '500'
+  },
+  history: {
+    borderRadius: 15,
+    borderColor: 'grey',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+    marginTop: 25,
+    marginRight: 10,
+    marginLeft: 10,
+    alignItems: 'flex-start',
+    justifyContent: 'center'
+  },
+  btnHistory: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    width: '100%',
+    justifyContent: 'space-between'
+  },
+  historyRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  historyIcon: {
+    width: 30,
+    height: 30,
+    tintColor: '#F46138'
+  },
+  historyText: {
+    fontSize: 17,
+    fontWeight: '500',
+    color: '#F46138',
+    marginLeft: 10
   }
 });
 
