@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { HOSTNAME } from '../../utils/Constants/systemVar'
+import { HOSTNAME } from '../../utils/constants/systemVar'
 import { useDispatch } from 'react-redux';
 import { _fetchLogin } from '../../services/callAPI'
 import { showNotification } from '../../services/notification';

@@ -1,5 +1,5 @@
 import { getTokens, saveTokens } from "./funcKeychain";
-import { HOST_LIST } from "./Constants/systemVar";
+import { HOST_LIST } from "./constants/systemVar";
 import { showNotification } from "../services/notification";
 
 const headerDefautl = {
