@@ -3,6 +3,7 @@ import Login from './Login'
 import Chat from './Chats/Chat'
 import Timekeeping from './Timekeeping'
 import TimekeepingHistory from './Timekeeping/TimekeepingHistory'
+import VacationsDate from './VacationsDate'
 
 export const views = [
     {
@@ -24,5 +25,9 @@ export const views = [
     {
         name: 'TimekeepingHistory',
         component: TimekeepingHistory
+    },
+    {
+        name: 'VacationsDate',
+        component: VacationsDate
     },
 ]

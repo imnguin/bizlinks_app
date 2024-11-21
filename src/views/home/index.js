@@ -77,12 +77,13 @@ const Home = ({ navigation }) => {
                     />
                     <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }} >Chấm công</Text>
                 </TouchableOpacity>
-                <View
+                <TouchableOpacity
                     style={{
                         alignItems: 'center',
                         justifyContent: 'center',
                         flex: 1
                     }}
+                    onPress={() => navigation.navigate('VacationsDate')}
                 >
                     <Image
                         source={require('../../../assets/9111285_calendar_plus_icon.png')}
@@ -94,7 +95,7 @@ const Home = ({ navigation }) => {
                         }}
                     />
                     <Text style={{ fontSize: 13, marginTop: 5, textAlign: 'center' }}>Đăng ký nghỉ phép</Text>
-                </View>
+                </TouchableOpacity>
                 <View
                     style={{
                         alignItems: 'center',
