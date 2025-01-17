@@ -1,9 +1,17 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, Animated, TextInput } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
+import { getDataStore } from '../../utils/funtions';
 const { width } = Dimensions.get('window');
 const Home = ({ navigation }) => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const sidebarTranslateX = useRef(new Animated.Value(width)).current;
+    const [userInfo, setUserInfo] = useState(null);
+    useEffect(() => {
+        const getInfo = async () => {
+            setUserInfo(await getDataStore('logininfo'))
+        }
+        getInfo();
+    }, []);
 
     const openSidebar = () => {
         if (!isSidebarVisible) {
@@ -27,16 +35,16 @@ const Home = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        userInfo && <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.profileContainer}>
                     <Image
-                        source={{ uri: 'https://th.bing.com/th/id/R.1ca2146e8479ced6aa60ca30b6b06173?rik=yWM%2f04i%2b8IJIlw&pid=ImgRaw&r=0' }}
+                        source={{ uri: userInfo.thumbnail }}
                         resizeMode='contain'
                         style={styles.profileImage}
                     />
                     <Text style={styles.profileName} numberOfLines={2} ellipsizeMode="tail">
-                        188197 - Lâm Xuân Nguyên
+                        {`${userInfo.fullname}`}
                     </Text>
                 </View>
                 <View style={styles.iconContainer}>

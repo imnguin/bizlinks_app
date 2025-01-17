@@ -12,6 +12,17 @@ const Chat = ({ navigation }) => {
         getInfo();
     }, []);
 
+    const autoRep = [
+        'Kono sekai dewa, yowai mono wa shinu houhou o erabu kenri ga nai.',
+        'Ore to Sukuna, docchi wo aite ni erabu?',
+        'Sekai o honki de rikai shite hajimete, sore o kaeru koto ga dekiru.',
+        'Ii sensei wa subete o oshieru no dewa naku, gakusei ni jibun de manabu houhou o oshieru mono da.',
+        'Ore wa saikyou da.',
+        'Sekai wa ore o hitsuyou to shiteiru. Ore ga sekai o hitsuyou to suru yori mo.',
+        'Tsuyoku naru to, nani demo jiyuu ni dekiru. Demo, hontou no chikara wa taisetsu na mono o mamoru koto da.',
+        'Kore o yoku oboeteoke, ore no seito ni te o dasu na.'
+    ];
+
     const [messages, setMessages] = useState([]);
 
     const onSend = useCallback((newMessages = []) => {
@@ -30,11 +41,19 @@ const Chat = ({ navigation }) => {
 
         // Giả lập bot trả lời
         setTimeout(() => {
-            setMessages((previousMessages) =>
-                GiftedChat.append(previousMessages, [
+            // Giả lập bot trả lời
+            setMessages((previousMessages) => {
+                const id = Math.random();
+                const lastDigit = Math.floor(id * 10) % 10; // Lấy số cuối của Math.random()
+                const text =
+                    lastDigit >= 1 && lastDigit <= 8
+                        ? autoRep[lastDigit - 1] // Chọn từ danh sách autoRep
+                        : 'これをよく覚えておけ、俺の生徒に手を出すな。'; // Giá trị mặc định
+
+                return GiftedChat.append(previousMessages, [
                     {
-                        _id: Math.random(),
-                        text: 'Nhắn nhắn cái địt mẹ mày!',
+                        _id: id,
+                        text: text,
                         createdAt: new Date(),
                         user: {
                             _id: 2,
@@ -43,9 +62,9 @@ const Chat = ({ navigation }) => {
                         },
                         isRead: false,
                     },
-                ])
-            );
-        }, 3000);
+                ]);
+            });
+        }, 2000);
     }, []);
 
     const CustomMessage = (props) => {

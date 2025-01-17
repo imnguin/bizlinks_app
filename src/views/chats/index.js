@@ -37,7 +37,7 @@ const Chats = ({ navigation }) => {
                 }}>
                     <View>
                         <Image
-                            source={require('../../../assets/me.png')}
+                            source={{ uri: 'https://th.bing.com/th/id/R.1ca2146e8479ced6aa60ca30b6b06173?rik=yWM%2f04i%2b8IJIlw&pid=ImgRaw&r=0' }}
                             resizeMode='contain'
                             style={{
                                 width: 50,
@@ -62,7 +62,7 @@ const Chats = ({ navigation }) => {
                             <Text style={{
                                 fontSize: 18,
                                 fontWeight: 500
-                            }}>Lâm Xuân Nguyên</Text>
+                            }}>Gojo satoru</Text>
                             <Text>18 giờ</Text>
                         </View>
                         <View style={{
@@ -76,7 +76,7 @@ const Chats = ({ navigation }) => {
                                 style={{
                                     fontSize: 17,
                                     flexShrink: 1
-                                }}>Xíu mày về đây thì biết haha haha haha hahah ahahahh ahahaha hahaha ahahaha hahaha hahaha hahah hahaha hahaha hahahy hahaha hahaha hahaha hahah haha </Text>
+                                }}>Tsuyoku naru to, nani demo jiyuu ni dekiru. Demo, hontou no chikara wa taisetsu na mono o mamoru koto da.</Text>
                             <View
                                 style={{
                                     backgroundColor: 'red',

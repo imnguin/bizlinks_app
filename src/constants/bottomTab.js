@@ -28,13 +28,13 @@ export const bottomTabs = [
     //     title: 'Thanh toán',
     //     headerShown: true
     // },
-    // {
-    //     name: 'Chats',
-    //     image: require('../../assets/message.png'),
-    //     title: 'Tin nhắn',
-    //     headerShown: true,
-    //     component: Chats
-    // },
+    {
+        name: 'Chats',
+        image: require('../../assets/message.png'),
+        title: 'Tin nhắn',
+        headerShown: true,
+        component: Chats
+    },
     {
         name: 'Account',
         image: require('../../assets/account.png'),
