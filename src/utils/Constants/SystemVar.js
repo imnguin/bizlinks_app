@@ -2,6 +2,6 @@ export const HOSTNAME = 'NODESERVER'
 export const HOST_LIST = {
     [HOSTNAME]: {
         hostName: [HOSTNAME],
-        hostBaseURL: 'http://10.152.174.23:8080/'
+        hostBaseURL: 'http://10.152.174.111:8080/'
     }
 }

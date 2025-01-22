@@ -1,28 +1,53 @@
 import { View, Text, FlatList, StyleSheet, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native';
+import { getDataStore } from '../../utils/funtions';
+import { HOSTNAME } from '../../utils/constants/systemVar';
+import { _fetchData } from '../../services/callAPI';
+import { useDispatch } from 'react-redux';
 
 const Chats = ({ navigation }) => {
+    const dispatch = useDispatch();
     const [data, setData] = useState([
     ]);
-
+    const [userInfo, setUserInfo] = useState(null);
+    const [isRefreshing, setRefreshing] = useState(false);
     useEffect(() => {
-        let aa = [];
-        for (let i = 0; i < 15; i++) {
-            aa.push({
-                _id: i,
-                fullName: "Phùng Thế Cơ",
-                isOnline: true,
-                userImg:
-                    "https://insite.thegioididong.com/cdninsite/UserImages/reviewed/142188_thumb.jpg",
-                lastSeen: "2023-11-18T04:52:06.501Z",
-                lastMessage: "Chieu nay em co ranh khong?",
-                messageInQueue: 0,
-                lastMessageTime: "12:15 PM",
-            });
+        const getInfo = async () => {
+            const Info = await getDataStore('logininfo');
+            setUserInfo(Info);
+            const chats = await loadChats(Info.username);
+            setData(chats);
+        };
+        getInfo();
+    }, []);
+
+    const loadChats = async (user) => {
+        const param = { members: user };
+        try {
+            const response = await dispatch(
+                _fetchData(HOSTNAME, "api/chat/loadChatsByUser", param, false)
+            );
+            console.log(response)
+
+            return response.resultObject || [];
+        } catch (error) {
+            console.error("Error loading chats:", error);
+            return [];
         }
-        setData(aa);
-    }, [])
+    };
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        try {
+            const chats = await loadChats(userInfo.username);
+            setData(chats);
+        } catch (error) {
+            console.error("Error refreshing chats:", error);
+        } finally {
+            setRefreshing(false);
+        }
+    };
 
     const renderItem = ({ item, index }) => {
         return (
@@ -62,7 +87,7 @@ const Chats = ({ navigation }) => {
                             <Text style={{
                                 fontSize: 18,
                                 fontWeight: 500
-                            }}>Gojo satoru</Text>
+                            }}>{item.chatId}</Text>
                             <Text>18 giờ</Text>
                         </View>
                         <View style={{
@@ -110,6 +135,8 @@ const Chats = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
                 keyExtractor={(item) => item._id.toString()}
+                refreshing={isRefreshing}
+                onRefresh={onRefresh}
             />
         </View>
     )

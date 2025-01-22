@@ -37,7 +37,6 @@ const Timekeeping = ({ navigation }) => {
   };
 
   const updateTimekeeping = (key, time) => {
-    console.log('key, time', key, time)
     if (key == 'checkin') {
       setTimeCheckIn(time)
     }

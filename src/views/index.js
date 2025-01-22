@@ -4,6 +4,7 @@ import Chat from './Chats/Chat'
 import Timekeeping from './Timekeeping'
 import TimekeepingHistory from './Timekeeping/TimekeepingHistory'
 import VacationsDate from './VacationsDate'
+import Test from './Chats/Test'
 
 export const views = [
     {
@@ -16,7 +17,7 @@ export const views = [
     },
     {
         name: 'Message',
-        component: Chat
+        component: Test
     },
     {
         name: 'Timekeeping',
@@ -28,6 +29,6 @@ export const views = [
     },
     {
         name: 'VacationsDate',
-        component: VacationsDate
+        component: Test
     },
 ]

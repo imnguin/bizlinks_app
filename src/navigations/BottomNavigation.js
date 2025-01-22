@@ -91,7 +91,7 @@ const BottomNavigation = () => {
                         <Tab.Screen
                             key={key}
                             name={tab.name}
-                            children={({ navigation }) => <View style={{ flex: 1 }}>{tab.component ? <tab.component navigation={navigation} /> : <Text>{tab.title}</Text>}</View>}
+                            children={({ navigation, focused }) => <View style={{ flex: 1 }}>{tab.component ? <tab.component navigation={navigation}/> : <Text>{tab.title}</Text>}</View>}
                             options={{
                                 headerShown: tab.headerShown,
                                 title: tab.title || undefined,

@@ -80,10 +80,10 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
                 body: typeof data === 'object' ? JSON.stringify(data) : JSON.stringify({ data })
             }
         }
-
+   
         const response = await fetchWithTimeout(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
-        if (response.status === 401) {
-            const refresh = await refreshToken();
+        if ([401,403].includes(response.status)) {
+            const refresh = await refreshToken(hostName, 'api/authen/refeshToken');
             if (refresh.iserror) {
                 return
             }
@@ -104,6 +104,7 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
 };
 
 const refreshToken = async (hostName, apiPath, data = {}, _header = headerDefautl, method = 'POST') => {
+    console.log('Gọi hàm làm mới lại token!')
     try {
         const tokens = await getTokens();
 

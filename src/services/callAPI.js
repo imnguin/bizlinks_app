@@ -1,6 +1,6 @@
 import { _fetchAPI, _fetchAPILogin } from "../utils/funcRequest"
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setDataStore } from "../utils/funtions";
+import { getDataStore, setDataStore } from "../utils/funtions";
 import { saveTokens } from "../utils/funcKeychain";
 import { hideLoading, showLoading } from "../redux/reducers";
 const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
@@ -13,7 +13,7 @@ const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
             await saveTokens(accessToken, refreshToken);
             delete apiResult.resultObject.accessToken;
             delete apiResult.resultObject.refreshToken;
-            await setDataStore('logininfo', JSON.stringify(apiResult.resultObject));
+            await setDataStore('logininfo', apiResult.resultObject);
             return {
                 ...apiResult,
                 messaege: 'Đăng nhập thành công!',
@@ -32,18 +32,21 @@ const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
     }
 }
 
-const _fetchData = (hostName, apiPath, data, method = 'POST') => async (dispatch, state) => {
+const _fetchData = (hostName, apiPath, data, isShowloading = true, method = 'POST') => async (dispatch, state) => {
     try {
-        dispatch(showLoading(true));
-        const logininfo = JSON.parse(AsyncStorage.getItem('logininfo'));
-        dispatch(hideLoading());
+        if(isShowloading)
+        {
+            dispatch(showLoading(true));
+        }
         const _header = {
             'user-agent': 'Mozilla/4.0 MDN Example',
             'Access-Control-Allow-Origin': '*',
-            "token": `Bearer ${logininfo.accessToken}`,
             'Content-Type': 'application/json'
         };
         const apiResult = await _fetchAPI(hostName, apiPath, data, _header);
+        if(isShowloading){
+            dispatch(hideLoading());
+        }
         return apiResult
 
     } catch (error) {
