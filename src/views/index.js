@@ -17,7 +17,7 @@ export const views = [
     },
     {
         name: 'Message',
-        component: Test
+        component: Chat
     },
     {
         name: 'Timekeeping',

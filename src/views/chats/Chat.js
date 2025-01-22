@@ -3,14 +3,41 @@ import { Bubble, GiftedChat, Message } from 'react-native-gifted-chat';
 import { View, Text, TouchableOpacity, Image, StyleSheet, Platform } from 'react-native';
 import CustomInputToolbar from './CustomInputToolbar'; // Import component tự tạo
 import { getDataStore, getNameInitials } from '../../utils/funtions';
+import { useRoute } from '@react-navigation/native';
+import { HOSTNAME } from '../../utils/constants/systemVar';
+import { useDispatch } from 'react-redux';
+import { _fetchData } from '../../services/callAPI';
 const Chat = ({ navigation }) => {
+    const dispatch = useDispatch();
     const [userInfo, setUserInfo] = useState(null);
+    const route = useRoute();
+    const [messages, setMessages] = useState([]);
+
+    const { chatId } = route.params;
+    const loadChat = async () => {
+        const param = { chatId};
+        try {
+            const response = await dispatch(
+                _fetchData(HOSTNAME, "api/chat/loadMessageByChatId", param)
+            );
+            console.log(response)
+
+            return response.resultObject || [];
+        } catch (error) {
+            console.error("Error loading chats:", error);
+            return [];
+        }
+    }
     useEffect(() => {
         const getInfo = async () => {
             setUserInfo(await getDataStore('logininfo'))
         }
         getInfo();
     }, []);
+
+    useEffect(() => {
+        loadChat(chatId)
+    }, [chatId]);
 
     const autoRep = [
         'Kono sekai dewa, yowai mono wa shinu houhou o erabu kenri ga nai.',
@@ -23,7 +50,6 @@ const Chat = ({ navigation }) => {
         'Kore o yoku oboeteoke, ore no seito ni te o dasu na.'
     ];
 
-    const [messages, setMessages] = useState([]);
 
     const onSend = useCallback((newMessages = []) => {
         const updatedMessages = newMessages.map((message) => ({

@@ -52,7 +52,7 @@ const Chats = ({ navigation }) => {
     const renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate("Message", { username: item.fullName })}
+                onPress={() => navigation.navigate("Message", { chatId: item.chatId })}
             >
                 <View style={{
                     flexDirection: 'row',
