@@ -18,7 +18,6 @@ const Login = ({ navigation }) => {
     const onLogin = async () => {
         const response = await dispatch(_fetchLogin(HOSTNAME, 'api/authen/login', { username, password }));
         if (!response.iserror) {
-            console.log(response)
             showNotification("Thông báo", "Đăng nhập thành công!", navigation.navigate("Main"));
         } else {
             Alert.alert(

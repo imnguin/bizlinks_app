@@ -2,7 +2,7 @@ import { _fetchAPI, _fetchAPILogin } from "../utils/funcRequest"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getDataStore, setDataStore } from "../utils/funtions";
 import { saveTokens } from "../utils/funcKeychain";
-import { hideLoading, showLoading } from "../redux/reducers";
+import { hideLoading, setDataUser, showLoading } from "../redux/reducers";
 const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
     try {
         dispatch(showLoading(true));
@@ -14,6 +14,7 @@ const _fetchLogin = (hostName, apiPath, data) => async (dispatch, state) => {
             delete apiResult.resultObject.accessToken;
             delete apiResult.resultObject.refreshToken;
             await setDataStore('logininfo', apiResult.resultObject);
+            dispatch(setDataUser(JSON.stringify(apiResult.resultObject)));
             return {
                 ...apiResult,
                 messaege: 'Đăng nhập thành công!',

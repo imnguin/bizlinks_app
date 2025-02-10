@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-
+import { navigate } from '../navigations/NavigationService';
 // Cấp quyền cho thông báo
 export const requestNotificationPermissions = async () => {
     const { status } = await Notifications.requestPermissionsAsync();

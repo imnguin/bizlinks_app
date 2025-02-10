@@ -5,6 +5,7 @@ import { getDataStore } from '../../utils/funtions';
 import { HOSTNAME } from '../../utils/constants/systemVar';
 import { _fetchData } from '../../services/callAPI';
 import { useDispatch } from 'react-redux';
+import { showNotification } from '../../services/notification';
 
 const Chats = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -28,8 +29,7 @@ const Chats = ({ navigation }) => {
             const response = await dispatch(
                 _fetchData(HOSTNAME, "api/chat/loadChatsByUser", param, false)
             );
-            console.log(response)
-
+            console.log('ListChat', response)
             return response.resultObject || [];
         } catch (error) {
             console.error("Error loading chats:", error);
@@ -52,7 +52,7 @@ const Chats = ({ navigation }) => {
     const renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate("Message", { chatId: item.chatId })}
+                onPress={() => navigation.navigate("Message", { roomId: item._id })}
             >
                 <View style={{
                     flexDirection: 'row',
@@ -87,7 +87,7 @@ const Chats = ({ navigation }) => {
                             <Text style={{
                                 fontSize: 18,
                                 fontWeight: 500
-                            }}>{item.chatId}</Text>
+                            }}>{item._id}</Text>
                             <Text>18 giờ</Text>
                         </View>
                         <View style={{

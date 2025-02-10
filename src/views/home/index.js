@@ -1,16 +1,20 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions, Animated, TextInput } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { getDataStore } from '../../utils/funtions';
+import { useSelector } from 'react-redux';
 const { width } = Dimensions.get('window');
 const Home = ({ navigation }) => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const sidebarTranslateX = useRef(new Animated.Value(width)).current;
     const [userInfo, setUserInfo] = useState(null);
+
+    const info = useSelector(state => state.user.value);
     useEffect(() => {
         const getInfo = async () => {
             setUserInfo(await getDataStore('logininfo'))
         }
         getInfo();
+        console.log('infosssdssssssss', JSON.parse(info))
     }, []);
 
     const openSidebar = () => {

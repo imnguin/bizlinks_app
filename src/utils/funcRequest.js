@@ -1,6 +1,7 @@
 import { getTokens, saveTokens } from "./funcKeychain";
 import { HOST_LIST } from "./constants/systemVar";
 import { showNotification } from "../services/notification";
+import { navigate } from "../navigations/NavigationService";
 
 const headerDefautl = {
     'user-agent': 'Mozilla/4.0 MDN Example',
@@ -57,7 +58,9 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
         let tokens = await getTokens();
         let token = tokens ? tokens.accessToken : null;
         if (!token) {
-            //Thông báo và đá ra màn hình đăng nhập
+            showNotification("Thông báo", 'Vui lòng đăng nhập lại!');
+            navigate('Login');
+            return
         }
 
         let requestData = {
@@ -80,12 +83,14 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
                 body: typeof data === 'object' ? JSON.stringify(data) : JSON.stringify({ data })
             }
         }
-   
+
         const response = await fetchWithTimeout(`${HOST_LIST[hostName].hostBaseURL}${apiPath}`, requestData);
-        if ([401,403].includes(response.status)) {
+        if ([401, 403].includes(response.status)) {
             const refresh = await refreshToken(hostName, 'api/authen/refeshToken');
             if (refresh.iserror) {
-                return
+                showNotification("Thông báo", refresh.message);
+                navigate('Login');
+                return refresh
             }
             const newAccessToken = refresh.resultObject.accessToken;
             requestData.headers.Authorization = `Bearer ${newAccessToken}`
@@ -104,7 +109,6 @@ export const _fetchAPI = async (hostName, apiPath, data = {}, _header = headerDe
 };
 
 const refreshToken = async (hostName, apiPath, data = {}, _header = headerDefautl, method = 'POST') => {
-    console.log('Gọi hàm làm mới lại token!')
     try {
         const tokens = await getTokens();
 

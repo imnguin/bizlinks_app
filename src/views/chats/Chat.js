@@ -12,10 +12,9 @@ const Chat = ({ navigation }) => {
     const [userInfo, setUserInfo] = useState(null);
     const route = useRoute();
     const [messages, setMessages] = useState([]);
-
-    const { chatId } = route.params;
+    const { roomId } = route.params;
     const loadChat = async () => {
-        const param = { chatId};
+        const param = { roomId};
         try {
             const response = await dispatch(
                 _fetchData(HOSTNAME, "api/chat/loadMessageByChatId", param)
@@ -36,20 +35,9 @@ const Chat = ({ navigation }) => {
     }, []);
 
     useEffect(() => {
-        loadChat(chatId)
-    }, [chatId]);
-
-    const autoRep = [
-        'Kono sekai dewa, yowai mono wa shinu houhou o erabu kenri ga nai.',
-        'Ore to Sukuna, docchi wo aite ni erabu?',
-        'Sekai o honki de rikai shite hajimete, sore o kaeru koto ga dekiru.',
-        'Ii sensei wa subete o oshieru no dewa naku, gakusei ni jibun de manabu houhou o oshieru mono da.',
-        'Ore wa saikyou da.',
-        'Sekai wa ore o hitsuyou to shiteiru. Ore ga sekai o hitsuyou to suru yori mo.',
-        'Tsuyoku naru to, nani demo jiyuu ni dekiru. Demo, hontou no chikara wa taisetsu na mono o mamoru koto da.',
-        'Kore o yoku oboeteoke, ore no seito ni te o dasu na.'
-    ];
-
+        console.log('roomId', roomId)
+        loadChat(roomId)
+    }, [roomId]);
 
     const onSend = useCallback((newMessages = []) => {
         const updatedMessages = newMessages.map((message) => ({
@@ -61,36 +49,32 @@ const Chat = ({ navigation }) => {
             GiftedChat.append(previousMessages, updatedMessages)
         );
 
-        setTimeout(() => {
-
-        })
-
         // Giả lập bot trả lời
-        setTimeout(() => {
-            // Giả lập bot trả lời
-            setMessages((previousMessages) => {
-                const id = Math.random();
-                const lastDigit = Math.floor(id * 10) % 10; // Lấy số cuối của Math.random()
-                const text =
-                    lastDigit >= 1 && lastDigit <= 8
-                        ? autoRep[lastDigit - 1] // Chọn từ danh sách autoRep
-                        : 'これをよく覚えておけ、俺の生徒に手を出すな。'; // Giá trị mặc định
+        // setTimeout(() => {
+        //     // Giả lập bot trả lời
+        //     setMessages((previousMessages) => {
+        //         const id = Math.random();
+        //         const lastDigit = Math.floor(id * 10) % 10; // Lấy số cuối của Math.random()
+        //         const text =
+        //             lastDigit >= 1 && lastDigit <= 8
+        //                 ? autoRep[lastDigit - 1] // Chọn từ danh sách autoRep
+        //                 : 'これをよく覚えておけ、俺の生徒に手を出すな。'; // Giá trị mặc định
 
-                return GiftedChat.append(previousMessages, [
-                    {
-                        _id: id,
-                        text: text,
-                        createdAt: new Date(),
-                        user: {
-                            _id: 2,
-                            name: 'ChatGPT',
-                            avatar: 'https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-6/449074787_3286501664985752_2833373860847785822_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Z4DIpr2iX10Q7kNvgEEM8Rw&_nc_ht=scontent.fsgn16-1.fna&_nc_gid=AgblF_c14NrUwsRae0uGfGt&oh=00_AYBalAYfxRzoLGVrVEKdqMB5SNMjmExlIKYoOT-8pf8KXw&oe=6709E795',
-                        },
-                        isRead: false,
-                    },
-                ]);
-            });
-        }, 2000);
+        //         return GiftedChat.append(previousMessages, [
+        //             {
+        //                 _id: id,
+        //                 text: text,
+        //                 createdAt: new Date(),
+        //                 user: {
+        //                     _id: 2,
+        //                     name: 'ChatGPT',
+        //                     avatar: 'https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-6/449074787_3286501664985752_2833373860847785822_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Z4DIpr2iX10Q7kNvgEEM8Rw&_nc_ht=scontent.fsgn16-1.fna&_nc_gid=AgblF_c14NrUwsRae0uGfGt&oh=00_AYBalAYfxRzoLGVrVEKdqMB5SNMjmExlIKYoOT-8pf8KXw&oe=6709E795',
+        //                 },
+        //                 isRead: false,
+        //             },
+        //         ]);
+        //     });
+        // }, 2000);
     }, []);
 
     const CustomMessage = (props) => {
@@ -110,7 +94,7 @@ const Chat = ({ navigation }) => {
                             marginBottom: 12,
                             justifyContent: 'center'
                         }}>
-                        <Image
+                        {/* <Image
                             source={require('../../../assets/me.png')}
                             style={{
                                 height: 17,
@@ -120,7 +104,7 @@ const Chat = ({ navigation }) => {
                                 borderColor: '#fff',
                                 borderWidth: 1
                             }}
-                        />
+                        /> */}
                     </View>
                 }
             </View>
