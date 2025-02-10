@@ -50,6 +50,7 @@ const Chats = ({ navigation }) => {
     };
 
     const renderItem = ({ item, index }) => {
+        console.log('item._id', item._id)
         return (
             <TouchableOpacity
                 onPress={() => navigation.navigate("Message", { roomId: item._id })}
@@ -134,7 +135,7 @@ const Chats = ({ navigation }) => {
                 data={data}
                 showsVerticalScrollIndicator={false}
                 renderItem={renderItem}
-                keyExtractor={(item) => item._id.toString()}
+                keyExtractor={(item) => item._id}
                 refreshing={isRefreshing}
                 onRefresh={onRefresh}
             />

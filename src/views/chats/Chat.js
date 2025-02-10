@@ -5,44 +5,52 @@ import CustomInputToolbar from './CustomInputToolbar'; // Import component tự 
 import { getDataStore, getNameInitials } from '../../utils/funtions';
 import { useRoute } from '@react-navigation/native';
 import { HOSTNAME } from '../../utils/constants/systemVar';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { _fetchData } from '../../services/callAPI';
 const Chat = ({ navigation }) => {
     const dispatch = useDispatch();
-    const [userInfo, setUserInfo] = useState(null);
+    const info = useSelector(state => JSON.parse(state.user.value));
     const route = useRoute();
     const [messages, setMessages] = useState([]);
     const { roomId } = route.params;
+    const [isLoad, setIsLoad] = useState(false);
     const loadChat = async () => {
-        const param = { roomId};
-        try {
-            const response = await dispatch(
-                _fetchData(HOSTNAME, "api/chat/loadMessageByChatId", param)
-            );
-            console.log(response)
+        setIsLoad(false);
+        const response = await dispatch(
+            _fetchData(HOSTNAME, "api/chat/loadMessageByChatId", { roomId })
+        );
 
-            return response.resultObject || [];
-        } catch (error) {
-            console.error("Error loading chats:", error);
-            return [];
-        }
+        const data = response.resultObject.reverse().map((item) => {
+            return {
+                ...item,
+                user: {
+                    _id: item.senderId
+                }
+            };
+        });
+        setMessages(data);
     }
-    useEffect(() => {
-        const getInfo = async () => {
-            setUserInfo(await getDataStore('logininfo'))
-        }
-        getInfo();
-    }, []);
 
     useEffect(() => {
-        console.log('roomId', roomId)
         loadChat(roomId)
+        setIsLoad(true)
     }, [roomId]);
 
-    const onSend = useCallback((newMessages = []) => {
+    const onSend = useCallback(async (newMessages = []) => {
+        const res = {
+            roomId: roomId,
+            createdAt: newMessages[0].createdAt,
+            text: newMessages[0].text,
+            senderId: info.username,
+            isRead: false
+        }
+        const response = await dispatch(
+            _fetchData(HOSTNAME, "api/chat/saveChat", res)
+        );
+
         const updatedMessages = newMessages.map((message) => ({
             ...message,
-            isRead: false, // Mặc định khi gửi tin nhắn, trạng thái là chưa xem
+            isRead: false,
         }));
 
         setMessages((previousMessages) =>
@@ -83,7 +91,8 @@ const Chat = ({ navigation }) => {
             <View>
                 <Message {...props} />
                 {
-                    currentMessage._id === messages[0]._id && currentMessage.user._id === userInfo.username && <View
+                    // currentMessage._id === messages[0]._id && 
+                    currentMessage.user._id === info.username && <View
                         style={{
                             alignSelf: 'flex-end',
                             borderRadius: 7,
@@ -128,7 +137,7 @@ const Chat = ({ navigation }) => {
     };
 
     return (
-        userInfo &&
+        isLoad &&
         <View style={{
             flex: 1
         }}>
@@ -216,7 +225,7 @@ const Chat = ({ navigation }) => {
                 messages={messages}
                 onSend={(messages) => onSend(messages)}
                 user={{
-                    _id: userInfo.username
+                    _id: info.username
                 }}
                 renderMessage={(props) => <CustomMessage {...props} />}
                 renderInputToolbar={(props) => (

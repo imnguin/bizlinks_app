@@ -6,17 +6,7 @@ const { width } = Dimensions.get('window');
 const Home = ({ navigation }) => {
     const [isSidebarVisible, setSidebarVisible] = useState(false);
     const sidebarTranslateX = useRef(new Animated.Value(width)).current;
-    const [userInfo, setUserInfo] = useState(null);
-
-    const info = useSelector(state => state.user.value);
-    useEffect(() => {
-        const getInfo = async () => {
-            setUserInfo(await getDataStore('logininfo'))
-        }
-        getInfo();
-        console.log('infosssdssssssss', JSON.parse(info))
-    }, []);
-
+    const info = useSelector(state => JSON.parse(state.user.value));
     const openSidebar = () => {
         if (!isSidebarVisible) {
             setSidebarVisible(true);
@@ -39,16 +29,16 @@ const Home = ({ navigation }) => {
     };
 
     return (
-        userInfo && <View style={styles.container}>
+        info && <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.profileContainer}>
                     <Image
-                        source={{ uri: userInfo.thumbnail }}
+                        source={{ uri: info.thumbnail }}
                         resizeMode='contain'
                         style={styles.profileImage}
                     />
                     <Text style={styles.profileName} numberOfLines={2} ellipsizeMode="tail">
-                        {`${userInfo.fullname}`}
+                        {`${info.fullname}`}
                     </Text>
                 </View>
                 <View style={styles.iconContainer}>
