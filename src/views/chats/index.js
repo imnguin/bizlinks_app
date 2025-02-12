@@ -29,7 +29,6 @@ const Chats = ({ navigation }) => {
             const response = await dispatch(
                 _fetchData(HOSTNAME, "api/chat/loadChatsByUser", param, false)
             );
-            console.log('ListChat', response)
             return response.resultObject || [];
         } catch (error) {
             console.error("Error loading chats:", error);
@@ -43,14 +42,12 @@ const Chats = ({ navigation }) => {
             const chats = await loadChats(userInfo.username);
             setData(chats);
         } catch (error) {
-            console.error("Error refreshing chats:", error);
         } finally {
             setRefreshing(false);
         }
     };
 
     const renderItem = ({ item, index }) => {
-        console.log('item._id', item._id)
         return (
             <TouchableOpacity
                 onPress={() => navigation.navigate("Message", { roomId: item._id })}
@@ -63,7 +60,7 @@ const Chats = ({ navigation }) => {
                 }}>
                     <View>
                         <Image
-                            source={{ uri: 'https://th.bing.com/th/id/R.1ca2146e8479ced6aa60ca30b6b06173?rik=yWM%2f04i%2b8IJIlw&pid=ImgRaw&r=0' }}
+                            source={{ uri: 'https://scontent.fhan4-6.fna.fbcdn.net/v/t39.30808-1/474948630_3454016478234269_8601937324029344509_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=108&ccb=1-7&_nc_sid=e99d92&_nc_ohc=9qKdPvSydVcQ7kNvgH9lrfX&_nc_oc=AdgKTP10ai2_6PsfHysUQLzHos8vG985LLF9Hry05AwPAzYm16LUh89q_HnoRPajH9o&_nc_zt=24&_nc_ht=scontent.fhan4-6.fna&_nc_gid=Aih5WFWaWiPG9xYea9kXoj1&oh=00_AYBjNpveINtiqTZk3HZqCkC7l_dh0igt84x0AIyLXAqRvQ&oe=67B231E6'}}
                             resizeMode='contain'
                             style={{
                                 width: 50,

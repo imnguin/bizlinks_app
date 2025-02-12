@@ -7,6 +7,8 @@ import { useRoute } from '@react-navigation/native';
 import { HOSTNAME } from '../../utils/constants/systemVar';
 import { useDispatch, useSelector } from 'react-redux';
 import { _fetchData } from '../../services/callAPI';
+import { connectSocket, listenForMessages, removeMessageListener, send, sendMessage, socket } from '../../utils/socket';
+
 const Chat = ({ navigation }) => {
     const dispatch = useDispatch();
     const info = useSelector(state => JSON.parse(state.user.value));
@@ -34,6 +36,23 @@ const Chat = ({ navigation }) => {
     useEffect(() => {
         loadChat(roomId)
         setIsLoad(true)
+        connectSocket(roomId);
+
+        // Lắng nghe tin nhắn từ server
+        listenForMessages((newMessage) => {
+            const smg = {
+                ...newMessage,
+                user : {
+                    _id : newMessage.senderId
+                },
+                _id : newMessage._id ?? Math.random().toString(36)
+            }
+            setMessages((prevMessages) => GiftedChat.append(prevMessages, [smg]));
+        });
+
+        return () => {
+            removeMessageListener(); // Xóa sự kiện khi rời khỏi màn hình
+        };
     }, [roomId]);
 
     const onSend = useCallback(async (newMessages = []) => {
@@ -44,45 +63,8 @@ const Chat = ({ navigation }) => {
             senderId: info.username,
             isRead: false
         }
-        const response = await dispatch(
-            _fetchData(HOSTNAME, "api/chat/saveChat", res)
-        );
 
-        const updatedMessages = newMessages.map((message) => ({
-            ...message,
-            isRead: false,
-        }));
-
-        setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, updatedMessages)
-        );
-
-        // Giả lập bot trả lời
-        // setTimeout(() => {
-        //     // Giả lập bot trả lời
-        //     setMessages((previousMessages) => {
-        //         const id = Math.random();
-        //         const lastDigit = Math.floor(id * 10) % 10; // Lấy số cuối của Math.random()
-        //         const text =
-        //             lastDigit >= 1 && lastDigit <= 8
-        //                 ? autoRep[lastDigit - 1] // Chọn từ danh sách autoRep
-        //                 : 'これをよく覚えておけ、俺の生徒に手を出すな。'; // Giá trị mặc định
-
-        //         return GiftedChat.append(previousMessages, [
-        //             {
-        //                 _id: id,
-        //                 text: text,
-        //                 createdAt: new Date(),
-        //                 user: {
-        //                     _id: 2,
-        //                     name: 'ChatGPT',
-        //                     avatar: 'https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-6/449074787_3286501664985752_2833373860847785822_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Z4DIpr2iX10Q7kNvgEEM8Rw&_nc_ht=scontent.fsgn16-1.fna&_nc_gid=AgblF_c14NrUwsRae0uGfGt&oh=00_AYBalAYfxRzoLGVrVEKdqMB5SNMjmExlIKYoOT-8pf8KXw&oe=6709E795',
-        //                 },
-        //                 isRead: false,
-        //             },
-        //         ]);
-        //     });
-        // }, 2000);
+        sendMessage(res);
     }, []);
 
     const CustomMessage = (props) => {
@@ -91,7 +73,6 @@ const Chat = ({ navigation }) => {
             <View>
                 <Message {...props} />
                 {
-                    // currentMessage._id === messages[0]._id && 
                     currentMessage.user._id === info.username && <View
                         style={{
                             alignSelf: 'flex-end',

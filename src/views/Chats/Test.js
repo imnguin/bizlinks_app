@@ -15,7 +15,6 @@ const Test = () => {
     const response = await dispatch(
       _fetchData(HOSTNAME, "api/chat/saveChat", param)
     );
-    console.log("response", response);
   };
 
   const onclick1 = async () => {
@@ -25,7 +24,6 @@ const Test = () => {
     const response = await dispatch(
       _fetchData(HOSTNAME, "api/chat/loadChatsByUser", param)
     );
-    console.log("response", response);
   };
 
   const onclick2 = async () => {
@@ -35,7 +33,6 @@ const Test = () => {
     const response = await dispatch(
       _fetchData(HOSTNAME, "api/chat/loadMessageByChatId", param)
     );
-    console.log("response", response);
   };
   return (
     <View
